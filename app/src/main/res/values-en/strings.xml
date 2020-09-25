@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="app_name">Reminder</string>
-<string name="today">Today</string>
-<string name="calendar">Calendar</string>
-<string name="settings">Settings</string>
+    <string name="today">today</string>
+    <string name="All">All</string>
 </resources>
