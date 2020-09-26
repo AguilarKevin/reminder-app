@@ -2,16 +2,15 @@ package com.aguilarkevin.reminder
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.aguilarkevin.reminder.todayEventsFragment.TodayFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,21 +31,29 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tablayout)
         viewPager = findViewById(R.id.viewpager_tabs)
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.today))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.All))
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.settings))
+        tabLayout.addTab(
+            tabLayout.newTab().setText(R.string.today).setIcon(R.drawable.ic_today_24px)
+        )
+        tabLayout.addTab(
+            tabLayout.newTab().setText(R.string.All).setIcon(R.drawable.ic_date_range_24px)
+        )
+        tabLayout.addTab(
+            tabLayout.newTab().setText(R.string.settings).setIcon(R.drawable.ic_settings_24px)
+        )
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        viewPager.adapter = Adapter(this,supportFragmentManager,tabLayout.tabCount)
+        viewPager.adapter = Adapter(this, supportFragmentManager, tabLayout.tabCount)
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewPager.currentItem = tab.position
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab) {
 
             }
+
             override fun onTabReselected(tab: TabLayout.Tab) {
 
             }
