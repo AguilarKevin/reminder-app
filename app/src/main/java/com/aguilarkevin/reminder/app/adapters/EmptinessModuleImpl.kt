@@ -1,4 +1,4 @@
-package com.aguilarkevin.reminder.todayEventsFragment.adapters
+package com.aguilarkevin.reminder.app.adapters
 
 import com.aguilarkevin.reminder.R
 import com.idanatz.oneadapter.external.modules.EmptinessModule

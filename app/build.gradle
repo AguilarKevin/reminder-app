@@ -50,4 +50,12 @@ dependencies {
 
     implementation 'com.github.roiacult:BackdropLayout:2.3'
     implementation "com.ironsource.aura.oneadapter:oneadapter:2.0.0"
+
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    testImplementation "androidx.room:room-testing:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
+
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 }

@@ -1,7 +1,7 @@
-package com.aguilarkevin.reminder.todayEventsFragment.adapters
+package com.aguilarkevin.reminder.app.adapters
 
 import com.aguilarkevin.reminder.R
-import com.aguilarkevin.reminder.todayEventsFragment.models.EventItem
+import com.aguilarkevin.reminder.app.models.EventItem
 import com.idanatz.oneadapter.external.modules.ItemModule
 
 class EventModule : ItemModule<EventItem>() {

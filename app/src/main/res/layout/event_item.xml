@@ -23,6 +23,7 @@
             android:weightSum="1">
 
             <TextView
+                android:id="@+id/event_item_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
@@ -31,6 +32,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/event_item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
@@ -41,6 +43,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/event_item_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lorem_ipsum"

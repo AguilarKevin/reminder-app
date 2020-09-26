@@ -10,9 +10,16 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="EditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorOnPrimarySurface">@color/accent</item>
+        <item name="strokeWidth">1.5dp</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="fontFamily">@font/droid_serif</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
