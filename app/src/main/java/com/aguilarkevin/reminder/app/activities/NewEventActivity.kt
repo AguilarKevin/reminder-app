@@ -1,5 +1,7 @@
 package com.aguilarkevin.reminder.app.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,18 +20,16 @@ class NewEventActivity : AppCompatActivity() {
         }
 
         done_btn.setOnClickListener {
-            if (title_input.text!!.isNotEmpty())
+            val replyIntent = Intent()
+            if (title_input.text!!.isEmpty())
                 Toast.makeText(this, R.string.add_a_title, Toast.LENGTH_LONG).show()
             else {
-                /*val db = Room.databaseBuilder(
-                    applicationContext,
-                    AppDatabase::class.java,
-                    "database-name")
-                    .build()
-
-                db.eventDao().insert(Event())*/
+                replyIntent.putExtra("title", title_input.text.toString())
+                replyIntent.putExtra("desc", description_input.text.toString())
+                replyIntent.putExtra("date", date_input.text.toString())
+                setResult(Activity.RESULT_OK, replyIntent)
             }
-
+            finish()
         }
 
     }

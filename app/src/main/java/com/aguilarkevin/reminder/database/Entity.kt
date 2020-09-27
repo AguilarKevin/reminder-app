@@ -1,20 +1,22 @@
 package com.aguilarkevin.reminder.database
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Entity
 data class Event(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    val title: String?,
+    val title: String,
     val description: String,
-    val type: String,
-    val date: String
+    val date: String,
+    val type: String
 )
 
 @Dao
 interface EventDao {
     @Query("SELECT * from Event ")
-    fun getAllEvents(): ArrayList<Event>
+    fun getAllEvents(): LiveData<List<Event>>
 
     @Query("SELECT * from Event where date=:date")
     fun getEventPerDate(date: String): Event
@@ -32,5 +34,27 @@ interface EventDao {
 @Database(entities = [Event::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun eventDao(): EventDao
+
+    companion object {
+
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "events_database"
+                ).build()
+                INSTANCE = instance
+                return instance
+            }
+        }
+    }
 
 }
