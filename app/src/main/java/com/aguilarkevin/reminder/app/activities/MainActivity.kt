@@ -3,20 +3,22 @@ package com.aguilarkevin.reminder.app.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.Data
 import com.aguilarkevin.reminder.R
 import com.aguilarkevin.reminder.app.adapters.EmptinessModuleImpl
 import com.aguilarkevin.reminder.app.adapters.EventModule
 import com.aguilarkevin.reminder.app.models.EventItem
+import com.aguilarkevin.reminder.app.notifications.NotificationUtils.NOTIFICATION_ID
 import com.aguilarkevin.reminder.database.Event
 import com.aguilarkevin.reminder.database.EventViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.idanatz.oneadapter.OneAdapter
 import com.idanatz.oneadapter.external.interfaces.Diffable
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.System.currentTimeMillis
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,11 +59,20 @@ class MainActivity : AppCompatActivity() {
             dataList.add(data?.getStringExtra("title")!!)
             dataList.add(data.getStringExtra("desc")!!)
             dataList.add(data.getStringExtra("date")!!)
-
             eventsViewModel.insert(Event(null, dataList[0], dataList[1], dataList[2], "Event"))
-        } else {
-            Toast.makeText(applicationContext, "no guardado", Toast.LENGTH_LONG).show()
+
+            val customTime = data.getIntExtra("timeInMillis", 0)
+            val currentTime = currentTimeMillis()
+            if (customTime > currentTime) {
+                val dat = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+                val delay = customTime - currentTime
+                scheduleNotification(delay, dat)
+            }
         }
+    }
+
+    private fun scheduleNotification(delay: Long, data: Data) {
+
     }
 
     private fun toDiffableList(events: List<Event>): List<Diffable> {
@@ -69,7 +80,6 @@ class MainActivity : AppCompatActivity() {
         for (i in events) {
             eventsList.add(EventItem(i.title, i.description, i.date, i.type))
         }
-
         return eventsList
     }
 

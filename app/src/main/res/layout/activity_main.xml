@@ -38,9 +38,6 @@
         app:borderWidth="0dp"
         android:backgroundTint="@color/accent"
         android:layout_margin="16dp"
-        android:overScrollMode="always"
-        android:text="@string/new_event"
-        android:textColor="@color/white"
         app:icon="@android:drawable/ic_input_add"
         android:layout_gravity="bottom|end"
         app:iconTint="@color/white" />

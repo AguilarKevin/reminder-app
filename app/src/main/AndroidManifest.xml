@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aguilarkevin.reminder">
+    package="com.aguilarkevin.reminder"
+    android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="false"
         android:hardwareAccelerated="true"
@@ -24,6 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".app.notifications.NotificationUtils" />
 
         <meta-data
             android:name="preloaded_fonts"
