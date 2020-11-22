@@ -1,6 +1,6 @@
 # Reminder
 
-Reminder is a Android app para llevar control de tus actividades.
+Reminder is a Android app to keep track of your activities.
 
 ## Installation
 
