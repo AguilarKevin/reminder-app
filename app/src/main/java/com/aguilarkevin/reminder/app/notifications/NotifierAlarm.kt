@@ -17,10 +17,8 @@ import com.aguilarkevin.reminder.database.Event
 import android.app.Notification
 import com.aguilarkevin.reminder.R
 
-
 class NotifierAlarm : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-
         val db = Room.databaseBuilder(
             context!!.applicationContext,
             AppDatabase::class.java, "database-name"
