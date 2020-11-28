@@ -7,10 +7,10 @@ import androidx.room.*
 @Entity
 data class Event(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    val title: String,
-    val description: String,
-    val date: String,
-    val type: String
+    var title: String,
+    var description: String,
+    var date: String,
+    var type: String
 )
 
 @Dao

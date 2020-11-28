@@ -10,8 +10,9 @@ import androidx.work.Data
 import com.aguilarkevin.reminder.R
 import com.aguilarkevin.reminder.app.adapters.EmptinessModuleImpl
 import com.aguilarkevin.reminder.app.adapters.EventModule
+import com.aguilarkevin.reminder.app.adapters.SwipeModule
 import com.aguilarkevin.reminder.app.models.EventItem
-import com.aguilarkevin.reminder.app.notifications.NotificationUtils.NOTIFICATION_ID
+import com.aguilarkevin.reminder.app.notifications.NotifierAlarm
 import com.aguilarkevin.reminder.database.Event
 import com.aguilarkevin.reminder.database.EventViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         oneAdapter = OneAdapter(recycler_view) {
             this.itemModules += EventModule()
+            //this.itemModules += SwipeModule()
             this.emptinessModule = EmptinessModuleImpl()
         }
 
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             val customTime = data.getIntExtra("timeInMillis", 0)
             val currentTime = currentTimeMillis()
             if (customTime > currentTime) {
-                val dat = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
+                val dat = Data.Builder().build()
                 val delay = customTime - currentTime
                 scheduleNotification(delay, dat)
             }
@@ -72,7 +74,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun scheduleNotification(delay: Long, data: Data) {
-
+        val notifyEvent = Intent( this@MainActivity, NotifierAlarm::class.java)
+        intent.putExtra("ID", data.getInt("ID", 0))
     }
 
     private fun toDiffableList(events: List<Event>): List<Diffable> {
