@@ -4,18 +4,21 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+
 @Entity
 data class Event(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
-    var title: String,
-    var description: String,
-    var date: String,
-    var type: String
+    @PrimaryKey val id: Int,
+    val title: String,
+    val description: String,
+    val date: String,
+    val dateInMills: Long,
+    val type: String
 )
 
 @Dao
 interface EventDao {
-    @Query("SELECT * from Event ")
+
+    @Query("SELECT * from Event order by dateInMills ASC")
     fun getAllEvents(): LiveData<List<Event>>
 
     @Query("SELECT * from Event where date=:date")
@@ -54,6 +57,29 @@ abstract class AppDatabase : RoomDatabase() {
                 INSTANCE = instance
                 return instance
             }
+        }
+
+        fun getDatabaseInBackground(context: Context): AppDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "events_database"
+                ).allowMainThreadQueries().build()
+
+                INSTANCE = instance
+                return instance
+            }
+        }
+
+
+
+        fun destroyInstance() {
+            INSTANCE = null
         }
     }
 

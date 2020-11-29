@@ -1,6 +1,7 @@
 package com.aguilarkevin.reminder.app.models
 
 import com.idanatz.oneadapter.external.interfaces.Diffable
+import java.util.*
 
 class EventItem(title: String, desc: String, date: String, type: String) : Diffable {
 
