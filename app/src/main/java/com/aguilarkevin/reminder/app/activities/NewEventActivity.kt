@@ -16,7 +16,6 @@ import java.util.*
 
 class NewEventActivity : AppCompatActivity() {
 
-    private var dateInMillis: Long = 0
     private lateinit var date: String
     private var calendarObject: Calendar = Calendar.getInstance()
 
@@ -37,10 +36,11 @@ class NewEventActivity : AppCompatActivity() {
             if (title_input.text!!.isEmpty())
                 Toast.makeText(this, "Rellene todos los campos", Toast.LENGTH_LONG).show()
             else {
-                replyIntent.putExtra("title", title_input.text.toString())
-                replyIntent.putExtra("desc", description_input.text.toString())
-                replyIntent.putExtra("date", date_input.text.toString())
-                replyIntent.putExtra("timeInMillis", dateInMillis)
+                replyIntent.putExtra("Title", title_input.text.toString())
+                replyIntent.putExtra("Description", description_input.text.toString())
+                replyIntent.putExtra("Date", date_input.text.toString())
+                replyIntent.putExtra("Type", "Event")
+                replyIntent.putExtra("timeInMillis", calendarObject.timeInMillis)
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()
             }
@@ -71,9 +71,8 @@ class NewEventActivity : AppCompatActivity() {
                 sec: Int,
                 AM_PM: String
             ) {
-                calendarObject.set(year, monthNumber, day, hour24, min, sec)
-                dateInMillis = calendarObject.timeInMillis
-                date = "$weekDayShortName $day, $monthShortName, $hour12:$min $AM_PM"
+                calendarObject.set(year, monthNumber, day, hour24, min, 0)
+                date = "$weekDayShortName $day, $monthShortName $hour12:$min $AM_PM"
                 date_input.setText(date)
             }
 
