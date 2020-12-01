@@ -71,7 +71,7 @@ class NewEventActivity : AppCompatActivity() {
                 sec: Int,
                 AM_PM: String
             ) {
-                calendarObject.set(year, monthNumber, day, hour24, min, sec)
+                calendarObject.set(year, monthNumber, day, hour24, min, 0)
                 date = "$weekDayShortName $day, $monthShortName $hour12:$min $AM_PM"
                 date_input.setText(date)
             }

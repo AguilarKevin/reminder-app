@@ -18,8 +18,14 @@ data class Event(
 @Dao
 interface EventDao {
 
+    @Query("SELECT COUNT(*) FROM Event")
+    fun getEventCount(): Int
+
     @Query("SELECT * from Event order by dateInMills ASC")
     fun getAllEvents(): LiveData<List<Event>>
+
+    @Query("SELECT * from Event order by dateInMills ASC Limit 1")
+    fun getNextEvent(): Event
 
     @Query("SELECT * from Event where date=:date")
     fun getEventPerDate(date: String): Event

@@ -16,10 +16,11 @@ import com.aguilarkevin.reminder.app.activities.MainActivity
 import com.aguilarkevin.reminder.database.AppDatabase
 import com.aguilarkevin.reminder.database.Event
 
-class NotifierAlarm : BroadcastReceiver() {
+class ReminderBroadcastReceiver : BroadcastReceiver() {
 
     private val GROUP_REMINDER_NOT = "com.aguilarkevin.reminder.WORK_REMINDER"
     private val CHANNEL_ID = "channel_01"
+    private val CHANNEL_NAME = "events"
 
     override fun onReceive(context: Context, intent: Intent) {
 
@@ -41,18 +42,7 @@ class NotifierAlarm : BroadcastReceiver() {
         taskStackBuilder.addParentStack(MainActivity::class.java)
         taskStackBuilder.addNextIntent(intent1)
 
-        val intent2 = taskStackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        var channel: NotificationChannel? = null
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    "reminder_channel",
-                    NotificationManager.IMPORTANCE_HIGH
-                )
-        }
+        val contentIntent = taskStackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(reminder.title)
@@ -60,21 +50,27 @@ class NotifierAlarm : BroadcastReceiver() {
             .setAutoCancel(true)
             .setSound(alarmSound)
             .setSmallIcon(R.drawable.ic_notifications_24px)
-            .setContentIntent(intent2)
+            .setContentIntent(contentIntent)
             .setGroup(GROUP_REMINDER_NOT)
             .setChannelId(CHANNEL_ID)
             .build()
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(channel!!)
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            notificationManager.createNotificationChannel(
+                NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+            )
 
-        notificationManager.notify(1, notification)
+        notificationManager.notify(reminder.id, notification)
 
-        Thread {
-            AppDatabase.getDatabase(context).eventDao().deleteEvent(reminder)
-        }.start()
+        Thread { AppDatabase.getDatabase(context).eventDao().deleteEvent(reminder) }.start()
+        EventsManager().updatePendingReminders(context)
+
     }
 }
